@@ -1,0 +1,36 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+{{ super() }}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Custom View 
+    <small>This is a custom view without DB model</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Custom</li>
+  </ol>
+</section>
+
+<section class="content">
+
+  <div class="row">
+    <!-- Left col -->
+    <section class="container">      
+      
+        Here you can place your custom data without a database dependence. <br>
+        Find this file in templates/admin/ as custom_index.html
+
+    </section>
+    <!-- /.Left col -->
+
+  </div>
+  <!-- /.row (main row) -->
+
+</section>
+<!-- /.content -->
+
+
+  {% endblock body %}

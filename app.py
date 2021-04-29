@@ -1,75 +1,58 @@
-import numpy as np
-import matplotlib.pyplot as plt
-# import datetime
-from datetime import datetime
-from datetime import date
-from flask import Flask, render_template, request, make_response, Response
-from pymongo import MongoClient
-import pandas as pd
+#!venv/bin/python
+import os
+from flask import Flask, url_for, redirect, render_template, request, abort
 
-import plotly
-import plotly.graph_objs as go
-import json
-from plotly.graph_objs import Layout, Figure
+import flask_admin
+from flask_admin import helpers as admin_helpers
+from flask_admin import BaseView, expose
 
-from functions.mongodb import Db
+# Create Flask application
 app = Flask(__name__)
-db = Db()
+app.config.from_pyfile('config.py')
 
 
-def string_to_datetime(d):
-    try:
-        d = datetime.strptime(d, '%B %Y').strftime('%Y-%b')
-    except:
-        d = datetime.strptime(d, '%b %Y').strftime('%Y-%b')
-    return d
 
-def create_plot(df):
 
-    data = [
-        go.Bar(
-            x=df['date'],
-            y=df['counts'],
-            name='Group By Month'
-        )
-    ]
-    layout = Layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        title='Plot'
+
+
+
+class CustomView(BaseView):
+    @expose('/')
+    def index(self):
+        return self.render('admin/custom_index.html')
+
+# Flask views
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Create admin
+admin = flask_admin.Admin(
+    app,
+    'My Dashboard',
+    base_template='my_master.html',
+    template_mode='bootstrap4',
+)
+
+# Add model views
+admin.add_view(CustomView(name="Custom view", endpoint='custom', menu_icon_type='fa', menu_icon_value='fa-connectdevelop',))
+
+# define a context processor for merging flask-admin's template context into the
+# flask-security views.
+def security_context_processor():
+    return dict(
+        admin_base_template=admin.base_template,
+        admin_view=admin.index_view,
+        h=admin_helpers,
+        get_url=url_for
     )
 
-    fig = Figure(data=data, layout=layout)
-
-    plot_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return plot_json
-
-
-@app.route('/')
-def hello_world():
-
-    data = db.find_all('acropolis')
-
-    # convert json to DataFrame
-    df = pd.DataFrame(list(data))
-    print(df)
-    df['date'] = df['date'].apply(lambda x: string_to_datetime(x))
-
-    print(df.head(5))
-
-    byMonthDf = df.groupby('date').size().reset_index(name='counts')
-    byMonthDf = byMonthDf.sort_values(by='date', ascending=True)
-
-    barChart = create_plot(byMonthDf)
-
-    return render_template('home.html',
-                           column_names=df.columns.values,
-                           row_data=list(df.values.tolist()),
-                           plot=barChart,
-                           zip=zip,
-                           **locals())
-
-
-
 if __name__ == '__main__':
-    app.run()
+
+    # Build a sample db on the fly, if one does not exist yet.
+    app_dir = os.path.realpath(os.path.dirname(__file__))
+    database_path = os.path.join(app_dir, app.config['DATABASE_FILE'])
+
+
+    # Start app
+    app.run(debug=True)

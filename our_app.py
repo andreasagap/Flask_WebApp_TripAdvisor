@@ -54,6 +54,7 @@ def hello_world():
     df = pd.DataFrame(list(data))
     print(df)
     df['date'] = df['date'].apply(lambda x: string_to_datetime(x))
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%b')
 
     print(df.head(5))
 

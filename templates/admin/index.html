@@ -1,17 +1,11 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-{{ super() }}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
     Dashboard
-    <small>Control panel</small>
   </h1>
-  <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
-  </ol>
 </section>
 
 <section class="content">
@@ -21,11 +15,11 @@
       <!-- small box -->
       <div class="small-box bg-aqua">
         <div class="inner">
-          <h3>150</h3>
-          <p>New Orders</p>
+          <h3>{{ratings_acropolis}}</h3>
+          <p>Ratings of Acropolis</p>
         </div>
         <div class="icon">
-          <i class="ion ion-bag"></i>
+          <i class="fa fa-university"></i>
         </div>
         <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>

@@ -75,30 +75,10 @@ def remove_punctuation(text):
     return final
 
 
-def classificationTask(train_matrix, test_matrix, train, test):
-    lr = LogisticRegression(max_iter=1000)
-
-    X_train = train_matrix
-    X_test = test_matrix
-    y_train = train['sentiment']
-    y_test = test['sentiment']
-
-    lr.fit(X_train, y_train)
-
-    predictions = lr.predict(X_test)
-
-    from sklearn.metrics import confusion_matrix, classification_report
-    new = np.asarray(y_test)
-    confusion_matrix(predictions, y_test)
-
-    print(classification_report(predictions, y_test))
-
-
 if __name__ == "__main__":
     reviews = load_dataset()
     create_histogram(reviews)
     train_matrix, test_matrix, train, test = preprocessing(reviews)
-    classificationTask(train_matrix, test_matrix, train, test)
 
 
 

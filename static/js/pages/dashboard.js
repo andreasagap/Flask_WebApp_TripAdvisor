@@ -4,7 +4,9 @@
  * Description:
  *      This is a demo file used only for the main dashboard (index.html)
  **/
-
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 $(function () {
 
   "use strict";
@@ -29,21 +31,28 @@ $(function () {
 
   //bootstrap WYSIHTML5 - text editor
   $(".textarea").wysihtml5();
-
   $('.daterange').daterangepicker({
     ranges: {
-      'Today': [moment(), moment()],
-      'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-      'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-      'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-      'This Month': [moment().startOf('month'), moment().endOf('month')],
-      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
     },
-    startDate: moment().subtract(29, 'days'),
-    endDate: moment()
+    startDate: moment('2011-10-01', 'YYYY-MM-DD'),
+    endDate: moment('2021-03-01', 'YYYY-MM-DD')
   }, function (start, end) {
-    window.alert("You chose: " + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-  });
+          $.post('/wordcloud', {'start': start.format('YYYY-MM-DD')
+          , 'end': end.format('YYYY-MM-DD')}, function(data) {
+            if(data.status == 200){
+                var timestamp = new Date().getTime();
+                var el = document.getElementById("wordcloud");
+                el.src = "/static/img/wordcloud.png?t=" + timestamp;
+
+
+            }
+            else{
+                alert("Δεν βρέθηκαν reviews για την περίοδο " + start.format('YYYY-MM-DD') + " με " + end.format('YYYY-MM-DD'));
+            }
+
+
+          })
+     })
 
   /* jQueryKnob */
   $(".knob").knob();
@@ -195,16 +204,6 @@ $(function () {
     line.redraw();
   });
 
-  /* The todo list plugin */
-  $(".todo-list").todolist({
-    onCheck: function (ele) {
-      window.console.log("The element has been checked");
-      return ele;
-    },
-    onUncheck: function (ele) {
-      window.console.log("The element has been unchecked");
-      return ele;
-    }
-  });
+
 
 });

@@ -2,20 +2,29 @@ import pandas as pd
 import numpy as np
 import nltk
 import re
+import matplotlib
 from nltk.corpus import stopwords
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 color = sns.color_palette()
 import plotly.express as px
 from wordcloud import WordCloud
 from sklearn.linear_model import LogisticRegression
+import datetime
 
 
 
-
-def load_dataset():
-    reviews = pd.read_csv('acropolis_reviews.csv')
-    print(reviews.head)
+def load_dataset(start,end):
+    reviews = pd.read_csv('Analytics/acropolis_reviews.csv',parse_dates=True)
+    reviews['date'] = reviews['date'].apply(lambda v: datetime.datetime.strptime(v, '%Y-%m-%d'))
+    #mask = (reviews['date'] >= start) & (reviews['date'] <= end)
+   # prc_sub = reviews.loc[mask]
+    start_date = datetime.datetime.strptime(start, '%Y-%m-%d')
+    end_date = datetime.datetime.strptime(end, '%Y-%m-%d')
+    reviews = reviews.loc[(reviews['date'] > start_date) & (reviews['date'] < end_date)]
+    print(reviews.dtypes)
+    print(reviews['date'].min(), reviews['date'].max())
     print('Reviews shape: ', reviews.shape)
     return reviews
 
@@ -67,13 +76,37 @@ def createWordcloud(text, stopwords):
     wordcloud = WordCloud(stopwords=stopwords).generate(text)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
-    plt.show()
+    plt.savefig('static/img/wordcloud.png', transparent=True)
+    return True
+
+
+    #plt.show()
 
 
 def remove_punctuation(text):
     final = "".join(u for u in text if u not in ("?", ".", ";", ":", "!", '"'))
     return final
 
+def apiWordCloud(start,end):
+    reviews = load_dataset(start,end)
+    if len(reviews)==0:
+        print(len(reviews))
+        return False
+    # Create stopword list:
+    stopwords_ = set(stopwords.words('english'))
+    stopwords_.update(["br", "href"])
+
+    # assign reviews with score > 3 as positive sentiment
+    # score < 3 negative sentiment
+    reviews = reviews[reviews['rating'] != 3]
+
+    reviews['sentiment'] = reviews['rating'].apply(lambda rating: +1 if rating > 3 else -1)
+
+    # split reviews - positive and negative sentiment:
+    positive = reviews[reviews['sentiment'] == 1]
+    negative = reviews[reviews['sentiment'] == -1]
+    return createWordcloud(positive, stopwords_)
+    #createWordcloud(negative, stopwords_)
 
 if __name__ == "__main__":
     reviews = load_dataset()

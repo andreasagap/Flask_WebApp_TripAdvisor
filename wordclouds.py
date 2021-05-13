@@ -12,7 +12,8 @@ import plotly.express as px
 from wordcloud import WordCloud
 from sklearn.linear_model import LogisticRegression
 import datetime
-
+import io
+import urllib, base64
 
 
 def load_dataset(start,end):
@@ -76,8 +77,9 @@ def createWordcloud(text, stopwords):
     wordcloud = WordCloud(stopwords=stopwords).generate(text)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
-    plt.savefig('static/img/wordcloud.png', transparent=True)
-    return True
+    #plt.savefig('static/img/wordcloud.png', transparent=True)
+    return  wordcloud.words_
+    #return True
 
 
     #plt.show()
@@ -105,7 +107,7 @@ def apiWordCloud(start,end):
     # split reviews - positive and negative sentiment:
     positive = reviews[reviews['sentiment'] == 1]
     negative = reviews[reviews['sentiment'] == -1]
-    return createWordcloud(positive, stopwords_)
+    return True,createWordcloud(positive, stopwords_),createWordcloud(negative, stopwords_)
     #createWordcloud(negative, stopwords_)
 
 if __name__ == "__main__":

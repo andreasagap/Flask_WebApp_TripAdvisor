@@ -5,7 +5,8 @@ import wordclouds
 import flask_admin
 from flask_admin import helpers as admin_helpers, AdminIndexView
 from flask_admin import BaseView, expose
-
+import acropolis
+import json
 # Create Flask application
 from matplotlib.figure import Figure
 
@@ -23,13 +24,16 @@ def create_figure():
 
 
 @app.route('/wordcloud',methods=['GET', 'POST'])
-def get_data():
+def get_wordcloud():
     """ get your data here and return it as json """
     start = request.form.get('start')
     end = request.form.get('end')
-    if wordclouds.apiWordCloud(start,end):
+    flag,p,n = wordclouds.apiWordCloud(start,end)
+    if flag:
         return jsonify({
-            "status": 200
+            "status": 200,
+            "p": json.dumps(p),
+            "n": json.dumps(n)
         })
     else:
         return jsonify({
@@ -37,15 +41,23 @@ def get_data():
         })
 
 
+
 @app.route('/admin')
 def index():
     #plt.savefig('/static/images/new_plot.png')
-    return render_template('index.html',ratings_acropolis=50)
+    return render_template('index.html')
 class MyHomeView(AdminIndexView):
     @expose('/')
     def index(self):
-        ratings_acropolis = '500'
-        return self.render('admin/index.html', ratings_acropolis=ratings_acropolis)
+        ratings_acropolis,man,woman,ages = acropolis.getAcropolisStatistics()
+        len_ages = len(ages)
+        jsonfiles = json.loads(ages.to_json(orient='index'))
+        print(jsonfiles)
+        return self.render('admin/index.html', ratings_acropolis=ratings_acropolis,
+                           man=man,
+                           woman=woman,
+                           len_ages = len_ages,
+                           ages=ages)
 # Create admin
 
 admin = flask_admin.Admin(

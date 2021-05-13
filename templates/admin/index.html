@@ -21,7 +21,7 @@
         <div class="icon">
           <i class="fa fa-university"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
       </div>
     </div>
     <!-- ./col -->
@@ -29,14 +29,14 @@
       <!-- small box -->
       <div class="small-box bg-green">
         <div class="inner">
-          <h3>53<sup style="font-size: 20px">%</sup></h3>
+          <h3>{{man}}</h3>
 
-          <p>Bounce Rate</p>
+          <p>Verified number of men</p>
         </div>
         <div class="icon">
-          <i class="ion ion-stats-bars"></i>
+          <i class="fa fa-male"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
       </div>
     </div>
     <!-- ./col -->
@@ -44,14 +44,14 @@
       <!-- small box -->
       <div class="small-box bg-yellow">
         <div class="inner">
-          <h3>44</h3>
+          <h3>{{woman}}</h3>
 
-          <p>User Registrations</p>
+          <p>Verified number of women</p>
         </div>
         <div class="icon">
-          <i class="ion ion-person-add"></i>
+          <i class="fa fa-female"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
       </div>
     </div>
     <!-- ./col -->
@@ -59,14 +59,14 @@
       <!-- small box -->
       <div class="small-box bg-red">
         <div class="inner">
-          <h3>65</h3>
+          <h3>{{len_ages}}</h3>
 
-          <p>Unique Visitors</p>
+          <p>Verified group of ages</p>
         </div>
         <div class="icon">
           <i class="ion ion-pie-graph"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
       </div>
     </div>
     <!-- ./col -->
@@ -109,9 +109,11 @@
           </h3>
         </div>
 
-        <div class="box-body" >
+        <div id = "wordclouds" class="box-body" >
+          <div id="positive_wordcloud"></div>
+          <div id="negative_wordcloud"></div>
 
-            <img id="wordcloud" src="/static/img/wordcloud.png" alt="">
+<!--            <img id="wordcloud" src="/static/img/wordcloud.png" alt="">-->
 
         </div>
       </div>

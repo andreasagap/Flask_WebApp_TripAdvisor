@@ -7,6 +7,52 @@
 function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
+function wordCloud(selector,words) {
+
+    var fill = d3.scale.category20();
+
+    //Construct the word cloud's SVG element
+    var svg = d3.select(selector).append("svg")
+        .attr("width", 600)
+        .attr("height", 200)
+        .append("g")
+        var layout = d3.layout.cloud()
+          .size([600, 200])
+          .words(words)
+          .padding(2)
+      .rotate(0)
+      .font("Impact")
+      .fontSize(function(d) {
+         return d.size;
+      })
+          .on("end", draw);
+        layout.start();
+    //Draw the word cloud
+    function draw(words) {
+       svg
+      .attr("style", "display: block; margin-left: auto; margin-right: auto; background: white; text-align: center;")
+      .append("g")
+      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+      .selectAll("text")
+      .data(words)
+      .enter().append("text")
+      .style("font-size", function(d) { return d.size + "px"; })
+      .style("font-family", "Impact")
+      .style("fill", function(d, i) { return fill(i); })
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) {
+        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+      })
+      .text(function(d) { return d.text; });
+    }
+    function update() {
+        svg.remove();
+
+    }
+}
+
+
+
 $(function () {
 
   "use strict";
@@ -40,9 +86,27 @@ $(function () {
           $.post('/wordcloud', {'start': start.format('YYYY-MM-DD')
           , 'end': end.format('YYYY-MM-DD')}, function(data) {
             if(data.status == 200){
-                var timestamp = new Date().getTime();
-                var el = document.getElementById("wordcloud");
-                el.src = "/static/img/wordcloud.png?t=" + timestamp;
+                // timestamp = new Date().getTime();
+                var negative = JSON.parse(data.n)
+                var positive = JSON.parse(data.p)
+                var positive_text = []
+                var negative_text = []
+                   document.getElementById('positive_wordcloud').innerHTML = "";
+                   document.getElementById('negative_wordcloud').innerHTML = "";
+                Object.keys(positive).forEach(function(key) {
+                  positive_text.push({text: key, size: 10 + positive[key] * 90})
+                })
+                Object.keys(negative).forEach(function(key) {
+                  negative_text.push({text: key, size: 10 + negative[key] * 90})
+                })
+
+                wordCloud("#positive_wordcloud",positive_text)
+                wordCloud("#negative_wordcloud",negative_text)
+                document.getElementById('wordclouds').style.height = "500px";
+                 document.getElementById("positive_wordcloud").style.margin = "18px";
+                  document.getElementById("negative_wordcloud").style.margin = "18px";
+               // var el = document.getElementById("wordcloud");
+//                el.src = "/static/img/wordcloud.png?t=" + timestamp;
 
 
             }

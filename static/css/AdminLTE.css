@@ -4746,6 +4746,7 @@ table.text-center th {
 .position-static {
   position: static !important;
 }
+
 .list-header {
   font-size: 15px;
   padding: 10px 4px;
@@ -4939,4 +4940,5 @@ table.text-center th {
   .table-responsive > .table tr td {
     white-space: normal !important;
   }
+
 }

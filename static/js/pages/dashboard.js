@@ -74,7 +74,50 @@ $(function () {
     forcePlaceholderSize: true,
     zIndex: 999999
   });
+ $.post('/wordcloud', {'start': "2011-10-01"
+          , 'end': '2021-03-01'}, function(data) {
+            if(data.status == 200){
+                // timestamp = new Date().getTime();
+                var negative = JSON.parse(data.n)
+                var positive = JSON.parse(data.p)
+                var positive_text = []
+                var negative_text = []
+                   document.getElementById('positive_wordcloud').innerHTML = "";
+                   document.getElementById('negative_wordcloud').innerHTML = "";
+                Object.keys(positive).forEach(function(key) {
+                  positive_text.push({text: key, size: 10 + positive[key] * 90})
+                })
+                Object.keys(negative).forEach(function(key) {
+                  negative_text.push({text: key, size: 10 + negative[key] * 90})
+                })
 
+                wordCloud("#positive_wordcloud",positive_text)
+                wordCloud("#negative_wordcloud",negative_text)
+                document.getElementById('wordclouds').style.height = "550px";
+                 document.getElementById("positive_wordcloud").style.margin = "12px";
+                  document.getElementById("negative_wordcloud").style.margin = "12px";
+               // var el = document.getElementById("wordcloud");
+//                el.src = "/static/img/wordcloud.png?t=" + timestamp;
+
+
+            }
+            else{
+                alert("Δεν βρέθηκαν reviews για την περίοδο " + start.format('YYYY-MM-DD') + " με " + end.format('YYYY-MM-DD'));
+            }
+
+
+          })
+$(".bg-red").hover(function () {
+    $(this).popover({
+        title: "Groups of ages",
+        content: "13-17: 2  <br />18-24: 60  <br />25-34: 306  <br />35-49: 550  <br />50-64: 550",
+        html: true,
+        placement: 'bottom'
+    }).popover('show');
+}, function () {
+    $(this).popover('hide');
+});
+           $('[data-toggle="popover"]').popover()
   //bootstrap WYSIHTML5 - text editor
   $(".textarea").wysihtml5();
   $('.daterange').daterangepicker({
@@ -102,9 +145,9 @@ $(function () {
 
                 wordCloud("#positive_wordcloud",positive_text)
                 wordCloud("#negative_wordcloud",negative_text)
-                document.getElementById('wordclouds').style.height = "500px";
-                 document.getElementById("positive_wordcloud").style.margin = "18px";
-                  document.getElementById("negative_wordcloud").style.margin = "18px";
+                document.getElementById('wordclouds').style.height = "550px";
+                 document.getElementById("positive_wordcloud").style.margin = "12px";
+                  document.getElementById("negative_wordcloud").style.margin = "12px";
                // var el = document.getElementById("wordcloud");
 //                el.src = "/static/img/wordcloud.png?t=" + timestamp;
 
@@ -117,6 +160,7 @@ $(function () {
 
           })
      })
+
 
   /* jQueryKnob */
   $(".knob").knob();

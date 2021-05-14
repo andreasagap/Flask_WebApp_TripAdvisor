@@ -17,7 +17,6 @@ warnings.simplefilter('ignore')
 
 
 data = pd.read_csv("Analytics/acropolis_reviews.csv")
-
 #clean data
 #create stopword list
 stop = set(stopwords.words('english'))

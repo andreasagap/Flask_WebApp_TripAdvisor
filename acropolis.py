@@ -1,5 +1,5 @@
 import pandas as pd
-
+from geopy.geocoders import Nominatim
 
 
 def getAcropolisStatistics():
@@ -7,5 +7,6 @@ def getAcropolisStatistics():
     ratings_acropolis = len(data)
     gender = data.gender.str.lower().value_counts()
     ages = data.age_group.value_counts()
-    print(ages)
+
+
     return ratings_acropolis,gender["man"],gender["woman"],ages

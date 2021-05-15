@@ -41,7 +41,10 @@ def get_wordcloud():
         })
 
 
-
+@app.route('/lda')
+def lda():
+    #plt.savefig('/static/images/new_plot.png')
+    return render_template('admin/LDA_Visualization.html')
 @app.route('/admin')
 def index():
     #plt.savefig('/static/images/new_plot.png')

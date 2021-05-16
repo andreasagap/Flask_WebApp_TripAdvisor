@@ -3,7 +3,7 @@ from geopy.geocoders import Nominatim
 
 
 def getAcropolisStatistics():
-    data = pd.read_csv("Analytics/demographics.csv")
+    data = pd.read_csv("Analytics/demographics_old.csv")
     ratings_acropolis = len(data)
     gender = data.gender.str.lower().value_counts()
     ages = data.age_group.value_counts()

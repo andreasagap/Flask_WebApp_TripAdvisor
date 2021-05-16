@@ -7,17 +7,19 @@
 function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
+
 function wordCloud(selector,words) {
 
     var fill = d3.scale.category20();
-
+    var w = document.getElementById(selector.replace(/#/gi, "")).getBoundingClientRect().width - 8
+     console.log(w)
     //Construct the word cloud's SVG element
     var svg = d3.select(selector).append("svg")
-        .attr("width", 600)
+        .attr("width", w)
         .attr("height", 200)
         .append("g")
         var layout = d3.layout.cloud()
-          .size([600, 200])
+          .size([w, 200])
           .words(words)
           .padding(2)
       .rotate(0)
@@ -94,12 +96,8 @@ $(function () {
                 wordCloud("#positive_wordcloud",positive_text)
                 wordCloud("#negative_wordcloud",negative_text)
                 document.getElementById('wordclouds').style.height = "550px";
-                 document.getElementById("positive_wordcloud").style.margin = "12px";
-                  document.getElementById("negative_wordcloud").style.margin = "12px";
-               // var el = document.getElementById("wordcloud");
-//                el.src = "/static/img/wordcloud.png?t=" + timestamp;
-
-
+                 document.getElementById("positive_wordcloud").style.margin = "8px";
+                  document.getElementById("negative_wordcloud").style.margin = "8px";
             }
             else{
                 alert("Δεν βρέθηκαν reviews για την περίοδο " + start.format('YYYY-MM-DD') + " με " + end.format('YYYY-MM-DD'));
@@ -107,6 +105,41 @@ $(function () {
 
 
           })
+$.ajax({
+    url: '/acropoli_map',
+    type: 'post',
+    dataType: 'json',
+    success: function (data) {
+        console.info(data);
+         $('#world-map').vectorMap({
+                    map: 'world_mill_en',
+                    backgroundColor: "transparent",
+                    regionStyle: {
+                      initial: {
+                        fill: '#e4e4e4',
+                        "fill-opacity": 1,
+                        stroke: 'none',
+                        "stroke-width": 0,
+                        "stroke-opacity": 1
+                      }
+                    },
+                    series: {
+                      regions: [{
+                        values: data,
+                        scale: ["#a0db8f", "#27b000"],
+                        normalizeFunction: 'polynomial'
+                      }]
+                    },
+                    onRegionLabelShow: function (e, el, code) {
+                      if (typeof data[code] != "undefined")
+                        el.html(el.html() + ': ' + data[code] + ' new visitors');
+                    }
+                  });
+
+
+    }
+});
+
 $(".bg-red").hover(function () {
     $(this).popover({
         title: "Groups of ages",
@@ -165,45 +198,6 @@ $(".bg-red").hover(function () {
   /* jQueryKnob */
   $(".knob").knob();
 
-  //jvectormap data
-  var visitorsData = {
-    "US": 398, //USA
-    "SA": 400, //Saudi Arabia
-    "CA": 1000, //Canada
-    "DE": 500, //Germany
-    "FR": 760, //France
-    "CN": 300, //China
-    "AU": 700, //Australia
-    "BR": 600, //Brazil
-    "IN": 800, //India
-    "GB": 320, //Great Britain
-    "RU": 3000 //Russia
-  };
-  //World map by jvectormap
-  $('#world-map').vectorMap({
-    map: 'world_mill_en',
-    backgroundColor: "transparent",
-    regionStyle: {
-      initial: {
-        fill: '#e4e4e4',
-        "fill-opacity": 1,
-        stroke: 'none',
-        "stroke-width": 0,
-        "stroke-opacity": 1
-      }
-    },
-    series: {
-      regions: [{
-        values: visitorsData,
-        scale: ["#92c1dc", "#ebf4f9"],
-        normalizeFunction: 'polynomial'
-      }]
-    },
-    onRegionLabelShow: function (e, el, code) {
-      if (typeof visitorsData[code] != "undefined")
-        el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
-    }
-  });
 
   //Sparkline charts
   var myvalues = [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021];

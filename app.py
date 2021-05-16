@@ -40,6 +40,11 @@ def get_wordcloud():
             "status": -1
         })
 
+@app.route('/acropoli_map',methods=['GET', 'POST'])
+def get_acropolismap():
+    return acropolis.getAcropolisMap()
+
+
 
 @app.route('/lda')
 def lda():

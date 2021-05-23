@@ -97,6 +97,8 @@ def apiWordCloud(start,end):
     # Create stopword list:
     stopwords_ = set(stopwords.words('english'))
     stopwords_.update(["br", "href"])
+    stopwords_.add("Athens")
+    stopwords_.add("Acropolis")
 
     # assign reviews with score > 3 as positive sentiment
     # score < 3 negative sentiment

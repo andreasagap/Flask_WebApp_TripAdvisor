@@ -55,7 +55,7 @@ ldamodel = lda(doc_term_matrix, num_topics=num_topics, id2word=dictionary, passe
 
 # lda visualization
 lda_display = pyLDAvis.gensim.prepare(ldamodel, doc_term_matrix, dictionary, sort_topics=False, mds='mmds')
-pyLDAvis.save_html(lda_display, 'LDA_Visualization.html') # save a visualization to a standalone html file
+pyLDAvis.save_html(lda_display, 'Overall_Period_LDA_Visualization.html') # save a visualization to a standalone html file
 
 
 

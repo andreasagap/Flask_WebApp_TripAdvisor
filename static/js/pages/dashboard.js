@@ -76,6 +76,7 @@ $(function () {
     forcePlaceholderSize: true,
     zIndex: 999999
   });
+
  $.post('/wordcloud', {'start': "2011-10-01"
           , 'end': '2021-03-01'}, function(data) {
             if(data.status == 200){

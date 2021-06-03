@@ -1,9 +1,9 @@
 #!venv/bin/python
 import os
-from flask import Flask, url_for, redirect, render_template, request, abort, jsonify
+from flask import Flask, url_for, redirect, render_template, request, abort, jsonify, send_from_directory
 import wordclouds
 import flask_admin
-from flask_admin import helpers as admin_helpers, AdminIndexView
+from flask_admin import helpers as admin_helpers, AdminIndexView, Admin
 from flask_admin import BaseView, expose
 import acropolis
 import json
@@ -40,21 +40,27 @@ def get_wordcloud():
             "status": -1
         })
 
+
+
 @app.route('/acropoli_map',methods=['GET', 'POST'])
 def get_acropolismap():
     return acropolis.getAcropolisMap()
 
+@app.route('/top10city/<path:filename>', methods=['GET'])
+def serve_static(filename):
+    return send_from_directory(os.path.dirname(os.getcwd()), filename)
 
 
-@app.route('/lda')
-def lda():
+@app.route('/lda/<name>')
+def lda(name):
     #plt.savefig('/static/images/new_plot.png')
-    return render_template('admin/LDA_Visualization.html')
+    return render_template('admin/LDA/'+name+'_Period_LDA_Visualization.html')
 @app.route('/admin')
 def index():
     #plt.savefig('/static/images/new_plot.png')
     return render_template('index.html')
 class MyHomeView(AdminIndexView):
+
     @expose('/')
     def index(self):
         ratings_acropolis,man,woman,ages = acropolis.getAcropolisStatistics()
@@ -66,6 +72,13 @@ class MyHomeView(AdminIndexView):
                            woman=woman,
                            len_ages = len_ages,
                            ages=ages)
+
+    @expose('/machine-learning')
+    def machine(self):
+            return self.render('admin/machineLearning.html')
+    @expose('/world')
+    def world(self):
+            return self.render('admin/custom_index.html')
 # Create admin
 
 admin = flask_admin.Admin(

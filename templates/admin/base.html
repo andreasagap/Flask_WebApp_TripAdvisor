@@ -18,7 +18,7 @@
       <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
   <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -100,9 +100,9 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        {% block main_menu %}
-        {{ layout.menu() }}
-        {% endblock %}
+         <li><a href="/">Home</a></li>
+        <li><a href="world">World</a></li>
+         <li><a href="machine-learning">Machine Learning</a></li>
 
       </ul>
     </section>
@@ -326,7 +326,9 @@
 {% if admin_view.name=="Home" %}
   <script src="{{url_for('static',filename='js/pages/dashboard.js')}}"></script>
 {% endif %}
-
+{% if admin_view.name=="World" %}
+  <script src="{{url_for('static',filename='js/pages/dashboard2.js')}}"></script>
+{% endif %}
 {% endblock tail_js%}
 
 {% block tail %}

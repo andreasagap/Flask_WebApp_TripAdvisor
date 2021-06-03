@@ -2,12 +2,6 @@
  {% block head %}
     <link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet">
 
-
-
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-  <script src="{{url_for('static',filename='js/pages/dashboard2.js')}}"></script>
-
   {% endblock head%}
 {% block body %}
 
@@ -16,7 +10,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    World
+    Machine Learning
   </h1>
 </section>
 
@@ -37,20 +31,23 @@
           <!-- tools box -->
           <div class="pull-right box-tools">
 
-            <button type="button" data-toggle="modal" data-target="#modalCity" class="btn btn-primary btn-sm pull-right" title="">
-              <i class="fa fa-globe"></i></button>
+            <button type="button" class="btn btn-primary btn-sm daterange pull-right" title="Date range">
+              <i class="fa fa-calendar"></i></button>
           </div>
           <!-- /. tools -->
 
+          <i class="fa fa-cloud"></i>
+
           <h3 class="box-title">
-            Histogram of top 10 cities
+            Wordclouds
           </h3>
         </div>
 
-        <div  class="box-body" >
-          <h3 style="color: white">Athens, Greece</h3>
-          <div id="top10histogram"></div>
-
+        <div id = "wordclouds" class="box-body" >
+          <h3 style="color: white">Positive wordcloud</h3>
+          <div id="positive_wordcloud" style="background-color: white"></div>
+          <h3 style="color: white">Negative wordcloud</h3>
+          <div id="negative_wordcloud" style="background-color: white"></div>
 
 <!--            <img id="wordcloud" src="/static/img/wordcloud.png" alt="">-->
 
@@ -66,7 +63,7 @@
 
 </section>
 <!-- /.content -->
-<div class="modal" id = "modalCity" tabindex="-1" role="dialog">
+<div class="modal" id = "modalLDA" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -74,19 +71,13 @@
       </div>
       <div class="modal-body">
 <div class="list-group">
-  <a class="list-group-item list-group-item-action">
-    Athens, Greece
+  <a href="lda/Winter" target="_blank" class="list-group-item list-group-item-action">
+    Winter
   </a>
-  <a class="list-group-item list-group-item-action">Barcelona, Spain</a>
-  <a class="list-group-item list-group-item-action">Crete, Greece</a>
-  <a class="list-group-item list-group-item-action">Dubai, United Arab Emirates</a>
-  <a class="list-group-item list-group-item-action">London, United Kingdom</a>
-    <a class="list-group-item list-group-item-action">Mykonos, Greece</a>
-  <a class="list-group-item list-group-item-action">New York City, New York</a>
-  <a class="list-group-item list-group-item-action">Paris, France</a>
-  <a class="list-group-item list-group-item-action">Rome, Italy</a>
-      <a class="list-group-item list-group-item-action">Santorini, Greece</a>
-
+  <a href="lda/Autumn" target="_blank" class="list-group-item list-group-item-action">Autumn</a>
+  <a href="lda/Spring" target="_blank" class="list-group-item list-group-item-action">Spring</a>
+  <a href="lda/Summer" target="_blank" class="list-group-item list-group-item-action">Summer</a>
+  <a href="lda/Overall" target="_blank" class="list-group-item list-group-item-action">Overall</a>
 </div>
 
       </div>

@@ -94,7 +94,7 @@
             <div class="icon">
               <i class="fa fa-commenting"></i>
             </div>
-          <a href="lda" target="_blank" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          <a target="_blank" class="small-box-footer" data-toggle="modal" data-target="#modalLDA">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </ul>
 
@@ -206,6 +206,29 @@
 
 </section>
 <!-- /.content -->
+<div class="modal" id = "modalLDA" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Choose season</h4>
+      </div>
+      <div class="modal-body">
+<div class="list-group">
+  <a href="lda/Winter" target="_blank" class="list-group-item list-group-item-action">
+    Winter
+  </a>
+  <a href="lda/Autumn" target="_blank" class="list-group-item list-group-item-action">Autumn</a>
+  <a href="lda/Spring" target="_blank" class="list-group-item list-group-item-action">Spring</a>
+  <a href="lda/Summer" target="_blank" class="list-group-item list-group-item-action">Summer</a>
+  <a href="lda/Overall" target="_blank" class="list-group-item list-group-item-action">Overall</a>
+</div>
 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock body %}

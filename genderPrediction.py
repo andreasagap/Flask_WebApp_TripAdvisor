@@ -23,13 +23,6 @@ def textPreprocessing(df):
     return df
 
 
-def TFIDFtransformer(df):
-    tfidf = TfidfVectorizer(max_features=500, analyzer='word', ngram_range=(1, 2))
-    tfidfDF = pd.DataFrame(tfidf.fit_transform(df['text']).toarray())
-    cols = tfidf.get_feature_names()
-    return tfidfDF, cols
-
-
 def loadDataset():
     reviews0 = pd.read_csv('Analytics/reviews/reviews0.csv')
     reviews1 = pd.read_csv('Analytics/reviews/reviews1.csv')
@@ -42,6 +35,7 @@ def loadDataset():
     reviews = [reviews0, reviews1, reviews2, reviews3, reviews4, reviews5, reviews6, reviews7]
     df = pd.concat(reviews, ignore_index=True)
     return df
+
 
 if __name__ == 'main':
     # Load dataset

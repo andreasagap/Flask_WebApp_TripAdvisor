@@ -7,6 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import silhouette_score, silhouette_samples
 import numpy as np
 import matplotlib.cm as cm
+from sklearn.decomposition import PCA
 
 
 def textPreprocessing(df):
@@ -20,7 +21,7 @@ def textPreprocessing(df):
 
 
 def TFIDFtransformer(df):
-    tfidf = TfidfVectorizer(max_features=500, analyzer='word', ngram_range=(1, 2))
+    tfidf = TfidfVectorizer(max_features=100, analyzer='word', ngram_range=(1, 3))
     tfidfDF = pd.DataFrame(tfidf.fit_transform(df['text']).toarray())
     cols = tfidf.get_feature_names()
     return tfidfDF, cols
@@ -170,6 +171,17 @@ if __name__ == '__main__':
     df, cols = TFIDFtransformer(df)
     df.columns = cols
     print(df.head())
+
+    # print('before outliers:', len(df))
+    # remove outliers
+    # from scipy import stats
+    # df = df[(np.abs(stats.zscore(df)) < 3).all(axis=1)]
+    # print('after outliers:', len(df))
+
+    pca = PCA(n_components=2)
+    df = pd.DataFrame(pca.fit_transform(df))
+
+    print(pca.explained_variance_ratio_)
 
     # Clustering Evaluation
     optimalK_SSE(df)

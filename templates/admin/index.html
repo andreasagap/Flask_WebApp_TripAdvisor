@@ -1,6 +1,7 @@
 {% extends 'admin/master.html' %}
  {% block head %}
     <link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet">
+  <script src="{{url_for('static',filename='js/pages/dashboard.js')}}"></script>
 
   {% endblock head%}
 {% block body %}
@@ -116,8 +117,10 @@
           <h3 class="box-title">
             Wordclouds
           </h3>
+          <p>
+            As Acropolis is the main core of our analysis, 20.000 user reviews were collected for the Acropolis location. According to the rating each review is classified as positive or negative. More specifically, ratings range from 1 to 5, so positive reviews include reviews with rating 4 and 5. On the other hand, negative reviews include reviews with score 1 and 2.In order to construct more meaningful wordclouds we excluded reviews with rating score 3 as they include neutral reviews. What’s more text reviews were preprocessed re-moving stopwords, punctuation and were transformed intovector representation using CountVectorizer. It is worth mentioning that the words Acropolis and Athens were added to the stopwords list, as they do not provide useful insight regarding user sentiment.
+          </p>
         </div>
-
         <div id = "wordclouds" class="box-body" >
           <h3 style="color: white">Positive wordcloud</h3>
           <div id="positive_wordcloud" style="background-color: white"></div>

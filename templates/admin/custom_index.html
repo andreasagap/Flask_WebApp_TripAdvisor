@@ -1,9 +1,9 @@
 {% extends 'admin/master.html' %}
  {% block head %}
-    <link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet">
+<link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
 
 
-
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
   <script src="{{url_for('static',filename='js/pages/dashboard2.js')}}"></script>
@@ -43,15 +43,19 @@
           <!-- /. tools -->
 
           <h3 class="box-title">
-            Histogram of top 10 cities
+            VADER sentiment scores for top 10 cities
           </h3>
         </div>
 
         <div  class="box-body" >
-          <h3 style="color: white">Athens, Greece</h3>
+       <!-- Left col -->
+
+      <h3 id="titleHistogram" style="color: white">Athens, Greece</h3>
           <div id="top10histogram"></div>
-
-
+<p>
+For the sentiment prediction we utilized a pretrainedmodel from NLTK library called Vader. Each review is as-signed a score in the range [-1, 1], where positive reviews areassigned a positive number that varies according to the in-tensity of the emotion.
+  <br></br>On the other hand, negative reviews are assigned a negative number that also varies according tothe intensity of the emotion.In order to better illustrate the sentiment scores for each location we plotted histograms for each location containing the distribution of scores and their frequencies. The scores are distributed in 4 bins so asto provide a more cohesive interpretation
+</p>
 <!--            <img id="wordcloud" src="/static/img/wordcloud.png" alt="">-->
 
         </div>
@@ -70,13 +74,11 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Choose season</h4>
+        <h4 class="modal-title">Choose city</h4>
       </div>
       <div class="modal-body">
-<div class="list-group">
-  <a class="list-group-item list-group-item-action">
-    Athens, Greece
-  </a>
+<div class="list-group" id="top10cityList">
+  <a class="list-group-item list-group-item-action">Athens, Greece</a>
   <a class="list-group-item list-group-item-action">Barcelona, Spain</a>
   <a class="list-group-item list-group-item-action">Crete, Greece</a>
   <a class="list-group-item list-group-item-action">Dubai, United Arab Emirates</a>

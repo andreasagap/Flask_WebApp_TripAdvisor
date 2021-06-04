@@ -1,8 +1,9 @@
 #!venv/bin/python
 import os
-from flask import Flask, url_for, redirect, render_template, request, abort, jsonify, send_from_directory
+from flask import Flask, url_for, redirect, render_template, request, abort, jsonify, send_from_directory, send_file
 import wordclouds
 import flask_admin
+import pandas as pd
 from flask_admin import helpers as admin_helpers, AdminIndexView, Admin
 from flask_admin import BaseView, expose
 import acropolis
@@ -48,7 +49,8 @@ def get_acropolismap():
 
 @app.route('/top10city/<path:filename>', methods=['GET'])
 def serve_static(filename):
-    return send_from_directory(os.path.dirname(os.getcwd()), filename)
+    return send_file(filename,
+                     mimetype='text/csv')
 
 
 @app.route('/lda/<name>')

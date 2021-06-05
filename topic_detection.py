@@ -4,6 +4,9 @@ import sklearn
 import nltk
 #nltk.download('stopwords')
 #nltk.download('wordnet')
+#nltk.download('punkt')
+#nltk.download('averaged_perceptron_tagger')
+from nltk import word_tokenize, pos_tag
 from nltk.corpus import stopwords
 import string
 from nltk.stem.wordnet import WordNetLemmatizer
@@ -20,7 +23,7 @@ data = pd.read_csv("Analytics/acropolis_reviews.csv")
 #clean data
 #create stopword list
 stop = set(stopwords.words('english'))
-new_stopwords = ['athens', 'acropolis', 'u']
+new_stopwords = ['athens', 'acropolis', 'u', 'acropoli','dont','its', 'history', 'acropolis', 'Athens', 'athena','place','see','that','day','lot','time','...','akropolis']
 stop = stop.union(new_stopwords)
 #remove punctuation
 exclude = set(string.punctuation)
@@ -34,6 +37,17 @@ def clean(text):
     return normalized.split()
 
 data['review_text_clean'] = data['review_text'].apply(clean)
+
+#keep only nouns and adj
+def nouns_adj(text):
+    # pull out only nouns and adjectives
+    is_noun = lambda pos: pos[:2] == 'NN' or pos[:2] == 'JJ'
+    all_nouns = [word for (word, pos) in pos_tag(text) if is_noun(pos)]
+    return ' '.join(all_nouns)
+
+data['review_text_clean']=data['review_text_clean'].apply(nouns_adj)
+
+data['review_text_clean'] = [d.split() for d in data['review_text_clean']]
 
 
 # create a dictionary
@@ -58,24 +72,3 @@ lda_display = pyLDAvis.gensim.prepare(ldamodel, doc_term_matrix, dictionary, sor
 pyLDAvis.save_html(lda_display, 'Overall_Period_LDA_Visualization.html') # save a visualization to a standalone html file
 
 
-
-"""
-# Assigns the topics to the documents in corpus
-lda_corpus = ldamodel[doc_term_matrix]
-
-#print([doc for doc in lda_corpus])
-
-scores = list(chain(*[[score for topic_id,score in topic] \
-                      for topic in [doc for doc in lda_corpus]]))
-
-threshold = sum(scores)/len(scores)
-print(threshold)
-
-cluster1 = [j for i,j in zip(lda_corpus,data.index) if i[0][1] > threshold]
-cluster2 = [j for i,j in zip(lda_corpus,data.index) if i[1][1] > threshold]
-cluster3 = [j for i,j in zip(lda_corpus,data.index) if i[2][1] > threshold]
-cluster4 = [j for i,j in zip(lda_corpus,data.index) if i[3][1] > threshold]
-cluster5 = [j for i,j in zip(lda_corpus,data.index) if i[4][1] > threshold]
-cluster6 = [j for i,j in zip(lda_corpus,data.index) if i[5][1] > threshold]
-cluster7 = [j for i,j in zip(lda_corpus,data.index) if i[6][1] > threshold]
-"""

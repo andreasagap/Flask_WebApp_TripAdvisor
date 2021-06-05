@@ -2,12 +2,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, DBSCAN
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import silhouette_score, silhouette_samples
 import numpy as np
 import matplotlib.cm as cm
 from sklearn.decomposition import PCA
+import seaborn as sns
 
 
 def textPreprocessing(df):
@@ -16,12 +17,15 @@ def textPreprocessing(df):
     df['text'] = df['text'].apply(lambda x: " ".join(x for x in x.split() if x not in stop))
     df['text'] = df['text'].apply(lambda x: " ".join(x.lower() for x in x.split()))
     stemmer = PorterStemmer()
+
     df['text'] = df['text'].apply(lambda x: " ".join([stemmer.stem(word) for word in x.split()]))
+    df['text'] = df['text'].apply(lambda x: " ".join(x for x in x.split() if x not in stop))
+
     return df
 
 
 def TFIDFtransformer(df):
-    tfidf = TfidfVectorizer(max_features=100, analyzer='word', ngram_range=(1, 3))
+    tfidf = TfidfVectorizer(max_features=100, analyzer='word', ngram_range=(1, 3), stop_words='english')
     tfidfDF = pd.DataFrame(tfidf.fit_transform(df['text']).toarray())
     cols = tfidf.get_feature_names()
     return tfidfDF, cols
@@ -142,35 +146,43 @@ def plotSilouhette(X):
         ax2.set_xlabel("Feature space for the 1st feature")
         ax2.set_ylabel("Feature space for the 2nd feature")
 
-        plt.suptitle(("Silhouette analysis for KMeans clustering on sample data "
-                      "with n_clusters = %d" % n_clusters),
-                     fontsize=14, fontweight='bold')
+        # plt.suptitle(("Silhouette analysis for KMeans clustering on sample data "
+        #               "with n_clusters = %d" % n_clusters),
+        #              fontsize=14, fontweight='bold')
 
     plt.show()
+
+
+def intepretationWithVariance():
+
+    print()
 
 
 if __name__ == '__main__':
 
     # load reviews csv
-    df = pd.read_csv('/home/andreas/Documents/Notebooks/TripAdvisor/reviews.csv')
-    print(df.head())
-    print(df.dtypes)
-
-    # keep ony text
-    df = df[['username', 'text']]
-
-    # group by username & merge reviews text to a unified corpus
-    df = df.groupby('username').agg({
-        'text': lambda x: ' '.join(x)
-    }).reset_index()
-
-    # Text Pre-Processing
-    df = textPreprocessing(df)
-
-    # Text Vectorization using TFIDF
-    df, cols = TFIDFtransformer(df)
-    df.columns = cols
-    print(df.head())
+    # df = pd.read_csv('/home/andreas/Documents/Notebooks/TripAdvisor/reviews.csv')
+    # print(df.head())
+    # print(df.dtypes)
+    #
+    # # keep ony text
+    # df = df[['username', 'text']]
+    #
+    # # group by username & merge reviews text to a unified corpus
+    # df = df.groupby('username').agg({
+    #     'text': lambda x: ' '.join(x)
+    # }).reset_index()
+    #
+    # # Text Pre-Processing
+    # df = textPreprocessing(df)
+    #
+    # # Text Vectorization using TFIDF
+    # df, cols = TFIDFtransformer(df)
+    # df.columns = cols
+    # print(df.head())
+    #
+    # df.to_csv('tfidf.csv', index=False)
+    df = pd.read_csv('tfidf.csv')
 
     # print('before outliers:', len(df))
     # remove outliers
@@ -179,15 +191,70 @@ if __name__ == '__main__':
     # print('after outliers:', len(df))
 
     pca = PCA(n_components=2)
-    df = pd.DataFrame(pca.fit_transform(df))
+    pcadf = pd.DataFrame(pca.fit_transform(df))
 
     print(pca.explained_variance_ratio_)
 
-    # Clustering Evaluation
-    optimalK_SSE(df)
-    optimalK_Silouhette(df)
-    plotSilouhette(df)
+    # df.to_csv('pcaDF.csv', index=False)
 
+    # pcadf = pd.read_csv('pcaDF.csv')
+
+    # Clustering Evaluation
+    optimalK_SSE(pcadf)
+    optimalK_Silouhette(pcadf)
+    # plotSilouhette(pcadf)
+
+
+    # dbscan = DBSCAN(eps=1, min_samples=2).fit(df)
+    # print('DBSCAN: {}'.format(silhouette_score(df, dbscan.labels_,
+    #                                            metric='cosine')))
+
+    km = KMeans(n_clusters=3).fit(pcadf)
+    # cluster_labels = km.fit_predict(df)
+
+    from sklearn.preprocessing import MinMaxScaler
+
+    scaler = MinMaxScaler()
+    df_scaled = pd.DataFrame(scaler.fit_transform(df))
+    df_scaled['cluster_id'] = km.labels_
+    df_mean = df_scaled.groupby('cluster_id').mean()
+    # df_mean.columns  = df.columns
+
+    results = pd.DataFrame(columns=['Variable', 'Var'])
+    for column in df_mean.columns:
+        print(column)
+        results.loc[len(results), :] = [column, np.var(df_mean[column])]
+    selected_columns = list(results.sort_values(
+        'Var', ascending=False,
+    ).head(15).Variable.values) + ['cluster_id']
+    tidy = df_scaled[selected_columns].melt(id_vars='cluster_id')
+    tidy['variable'] = tidy['variable'].apply(lambda x: df.columns[x])
+    # clrs = ['grey' if (x < max(tidy['value'])) else 'red' for x in tidy['value']]
+    sns.barplot(x='cluster_id', y='value', hue='variable', data=tidy)
+    plt.legend(bbox_to_anchor=(1.01, 1),
+               borderaxespad=0)
+    plt.title('Interpretation with feature variance')
+    plt.show()
+
+    # for i in selected_columns:
+    #     print(str(i) + ': ' + str(df.columns[i]))
+
+
+    from sklearn.ensemble import RandomForestClassifier
+
+    X, y = df_scaled.iloc[:, :-1], df_scaled.iloc[:, -1]
+    clf = RandomForestClassifier(n_estimators=100).fit(X, y)
+    data = np.array([clf.feature_importances_, X.columns]).T
+    columns = list(pd.DataFrame(data, columns=['Importance', 'Feature'])
+                   .sort_values("Importance", ascending=False)
+                   .head(15).Feature.values)
+    tidy = df_scaled[columns + ['cluster_id']].melt(id_vars='cluster_id')
+    tidy['variable'] = tidy['variable'].apply(lambda x: df.columns[x])
+    sns.barplot(x='cluster_id', y='value', hue='variable', data=tidy)
+    plt.legend(bbox_to_anchor=(1.01, 1),
+               borderaxespad=0)
+    plt.title('Interpretation with feature importance')
+    plt.show()
 
 
 

@@ -1,13 +1,37 @@
 
 .message {
-
-
   width: 80%;
   height: auto;
-    margin: 0 auto;
-    position: relative;
-      background-color: rgba(0,0,0,0.6);
+  margin: 0 auto;
+  position: relative;
+  background-color: rgba(0,0,0,0.6);
   color: #fff;
   padding: 10px;
 }
 
+#top10histogram{
+  margin: auto;
+  width: 50%;
+  /*border: 3px solid green;*/
+  padding: 10px;
+
+
+}
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: whitesmoke;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: whitesmoke;
+}

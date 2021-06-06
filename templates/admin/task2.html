@@ -1,6 +1,7 @@
 {% extends 'admin/master.html' %}
  {% block head %}
 <link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
+<link href="{{url_for('static',filename='css/userClustering.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
 
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -24,7 +25,7 @@
   <!-- Main row -->
   <div class="row">
     <!-- Left col -->
-    <section class="col-lg-5 ">
+{#    <section class="col-lg-5 ">#}
       <!-- Custom tabs (Charts with tabs)-->
 
       <!-- /.nav-tabs-custom -->
@@ -57,7 +58,7 @@ For the sentiment prediction we utilized a pretrainedmodel from NLTK library cal
 
         </div>
       </div>
-    </section>
+{#    </section>#}
     <!-- /.Left col -->
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

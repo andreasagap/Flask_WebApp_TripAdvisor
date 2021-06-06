@@ -37,6 +37,7 @@ $('#top10cityList a').on('click', function () {
 
   // A function that builds the graph for a specific value of bin
   function update(nBin) {
+      // width = $('#barchart').width - margin.left - margin.right
 
     // set the parameters for the histogram
     var histogram = d3.histogram()
@@ -103,6 +104,8 @@ $('#top10cityList a').on('click', function () {
 
   // A function that builds the graph for a specific value of bin
   function update(nBin) {
+
+      width = $('#barchart').offsetWidth - margin.left - margin.right
 
     // set the parameters for the histogram
     var histogram = d3.histogram()

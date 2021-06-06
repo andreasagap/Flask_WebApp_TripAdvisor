@@ -1,15 +1,26 @@
 {% extends 'admin/master.html' %}
  {% block head %}
-<link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
-
+<link href="{{url_for('static',filename='css/userClustering.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-  <script src="{{url_for('static',filename='js/pages/dashboard3.js')}}"></script>
+  <script src="{{url_for('static',filename='js/pages/userClustering.js')}}"></script>
+           <script src="/node_modules/@immfly/flights-map/lib.js"></script>
 
+<script>
+    function updateSlider(slideAmount) {
+
+        var sliderDiv = document.getElementById("ktitle");
+        sliderDiv.innerHTML = "Range slider For K = " + slideAmount;
+        document.getElementById("centerClustersImg").src = "static/img/visualization/"+slideAmount+"means.png"
+
+
+    }
+</script>
   {% endblock head%}
 {% block body %}
 
+<!-- user clustering -->
 
 
 <!-- Content Header (Page header) -->
@@ -74,9 +85,13 @@
             <p align="justify" >
                  An illustration of the clusters is also given in the following picture. Clusters are projected in 2 dimensional space by using the 2 principal components resulting from the PCA.
             </p>
+             <h2 id="ktitle">
+      Range slider For K = 3
+    </h2>
+<input id="slide" type="range" min="2" max="10" step="1" value="3" onchange="updateSlider(this.value)">        <br/>
 
-          <img class="centerClusters" width="80%" height="350" src="static/img/3means.png">
-
+          <img class="centerClusters" id="centerClustersImg" width="80%" height="350" src="static/img/visualization/3means.png">
+ <br/>
             <p>
                 Additionally, it’s important to know what makes each cluster unique. This will help us understand which
                 types of tourists we have in our Dataset. The approach would be to pick a subset of variables that are
@@ -84,7 +99,7 @@
                 groups and extracting feature importance through predictive modeling.
 
             </p>
-
+ <br/>
             <div class="rowImage">
               <div class="columnImage">
                 <img src="static/img/interpretation1.png" style="width:100%">
@@ -98,7 +113,13 @@
 
         </div>
       </div>
+
+       <div class="row">
+           <flights-map></flights-map>
+       </div>
     </section>
+
+
  </div>
 </section>
 <!-- /.content -->
@@ -118,3 +139,4 @@
 </div>
 
 {% endblock body %}
+

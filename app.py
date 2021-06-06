@@ -65,15 +65,8 @@ class MyHomeView(AdminIndexView):
 
     @expose('/')
     def index(self):
-        ratings_acropolis,man,woman,ages = acropolis.getAcropolisStatistics()
-        len_ages = len(ages)
-        jsonfiles = json.loads(ages.to_json(orient='index'))
-        print(jsonfiles)
-        return self.render('admin/index.html', ratings_acropolis=ratings_acropolis,
-                           man=man,
-                           woman=woman,
-                           len_ages = len_ages,
-                           ages=ages)
+        return self.render('admin/index.html')
+
 
     @expose('/task2')
     def task2(self):
@@ -82,8 +75,6 @@ class MyHomeView(AdminIndexView):
     def task1(self):
         ratings_acropolis, man, woman, ages = acropolis.getAcropolisStatistics()
         len_ages = len(ages)
-        jsonfiles = json.loads(ages.to_json(orient='index'))
-        print(jsonfiles)
         return self.render('admin/task1.html', ratings_acropolis=ratings_acropolis,
                            man=man,
                            woman=woman,
@@ -99,7 +90,7 @@ class MyHomeView(AdminIndexView):
 
 admin = flask_admin.Admin(
     app,
-    'My Dashboard',
+    'TripAdvisor',
     base_template='admin/my_master.html',
     template_mode='bootstrap4',
     index_view=MyHomeView(name='Home', url='/')

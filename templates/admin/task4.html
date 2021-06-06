@@ -19,62 +19,6 @@
 
   <!-- /.row -->
   <!-- Main row -->
-  <div class="row">
-    <!-- Left col -->
-    <section class="col-lg-5 ">
-      <!-- Custom tabs (Charts with tabs)-->
-
-      <!-- /.nav-tabs-custom -->
- <!-- WordClouds box -->
-      <div class="box box-solid bg-light-blue-gradient">
-        <div class="box-header">
-          <!-- tools box -->
-          <!-- /. tools -->
-
-
-          <h3 class="box-title">
-            Gender Prediction
-          </h3>
-        </div>
-
-        <div class="box-body" >
-          <img class="center" width="450" height="350" src="static/img/genderPredictionCM.png">
-
-          <p align="justify" >
-            In order to enrich the demographic information about user profiles, a gender prediction module was implemented.Out of 5549 user profiles collected, only 875 of them contained a gender feature. What’s more, reviews from 2263 users were collected and incorporated for the gender pre-diction task. The gender prediction module starts with the data preprocessing, in which the reviews of each user are aggregated. Next, text reviews are transformed into lower-case representation and are stemmed while stopwords and digits are removed. The text is then transformed into vector representation using CountVectorizer method. Out of the 875 known user profiles, 600 are used for the training phase,while 275 are used for testing. We utilized a Random ForestClassifier for the binary classification and the evaluation metrics are accuracy score and F1-score. The classifier achieved 0.67 accuracy and 0.57 F1-score.
-          </p>
-        </div>
-      </div>
-    </section>
-    <section class="col-lg-5 ">
-      <!-- Custom tabs (Charts with tabs)-->
-
-      <!-- /.nav-tabs-custom -->
- <!-- WordClouds box -->
-      <div class="box box-solid bg-light-blue-gradient">
-        <div class="box-header">
-          <!-- tools box -->
-          <!-- /. tools -->
-
-
-          <h3 class="box-title">
-            Age Prediction
-          </h3>
-        </div>
-
-        <div class="box-body" >
-          <img class="center" width="450" height="350" src="static/img/genderPredictionCM.png">
-
-          <p align="justify" >
-          </p>
-        </div>
-      </div>
-    </section>
-    <!-- /.Left col -->
-    <!-- right col (We are only adding the ID to make the widgets sortable)-->
-
-    <!-- right col -->
-  </div>
   <!-- /.row (main row) -->
  <div class="row">
    <section >
@@ -86,11 +30,6 @@
         <div class="box-header">
           <!-- tools box -->
           <!-- /. tools -->
-    <div class="pull-right box-tools">
-
-            <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#modalUser" title="">
-              <i class="fa fa-info"></i></button>
-          </div>
 
           <h3 class="box-title">
             User Clustering

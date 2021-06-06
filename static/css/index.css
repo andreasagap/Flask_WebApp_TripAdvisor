@@ -1,0 +1,15 @@
+.rowImage {
+  display: flex;
+}
+
+.columnImage {
+  flex: 50%;
+  padding: 5px;
+}
+
+.centerClusters {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}

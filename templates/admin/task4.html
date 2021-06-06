@@ -11,7 +11,7 @@
     function updateSlider(slideAmount) {
 
         var sliderDiv = document.getElementById("ktitle");
-        sliderDiv.innerHTML = "Range slider For K = " + slideAmount;
+        sliderDiv.innerHTML = "Range slider for k = " + slideAmount;
         document.getElementById("centerClustersImg").src = "static/img/visualization/"+slideAmount+"means.png"
 
 
@@ -86,7 +86,7 @@
                  An illustration of the clusters is also given in the following picture. Clusters are projected in 2 dimensional space by using the 2 principal components resulting from the PCA.
             </p>
              <h2 id="ktitle">
-      Range slider For K = 3
+      Range slider for k=3
     </h2>
 <input id="slide" type="range" min="2" max="10" step="1" value="3" onchange="updateSlider(this.value)">        <br/>
 

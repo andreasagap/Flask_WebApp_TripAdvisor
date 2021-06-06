@@ -4,6 +4,7 @@ from flask import Flask, url_for, redirect, render_template, request, abort, jso
 import wordclouds
 import flask_admin
 import pandas as pd
+import getGeoCode
 from flask_admin import helpers as admin_helpers, AdminIndexView, Admin
 from flask_admin import BaseView, expose
 import acropolis
@@ -52,7 +53,13 @@ def serve_static(filename):
     return send_file(filename,
                      mimetype='text/csv')
 
-
+@app.route('/map', methods=['GET', 'POST'])
+def map_static():
+    country = request.form.get('country')
+    return jsonify({
+        "status": 200,
+        "flightsArray": getGeoCode.getAirplanes(country)
+    })
 @app.route('/lda/<name>')
 def lda(name):
     #plt.savefig('/static/images/new_plot.png')
@@ -86,6 +93,10 @@ class MyHomeView(AdminIndexView):
     @expose('/task4')
     def task4(self):
             return self.render('admin/task4.html')
+
+    @expose('/task5')
+    def task2(self):
+        return self.render('admin/task5.html')
 # Create admin
 
 admin = flask_admin.Admin(

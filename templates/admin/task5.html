@@ -1,0 +1,68 @@
+{% extends 'admin/master.html' %}
+ {% block head %}
+<link href="{{url_for('static',filename='css/userClustering.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script src="{{url_for('static',filename='js/pages/dashboard3.js')}}"></script>
+  <script src="{{url_for('static',filename='node_modules/@immfly/flights-map/lib.js')}}"></script>
+
+
+  {% endblock head%}
+{% block body %}
+
+<!-- user clustering -->
+
+
+<!-- Content Header (Page header) -->
+
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+
+  <!-- /.row -->
+  <!-- Main row -->
+  <!-- /.row (main row) -->
+ <div class="row">
+   <section >
+      <!-- Custom tabs (Charts with tabs)-->
+
+      <!-- /.nav-tabs-custom -->
+
+       <div class="row">
+               <div style=" z-index:100; position:fixed;" class="pull-left box-tools">
+
+            <button type="button" data-toggle="modal" data-target="#modalCountry" class="btn btn-primary btn-sm pull-left" title="">
+              <i class="fa fa-globe"></i></button>
+          </div>
+           <flights-map></flights-map>
+
+       </div>
+    </section>
+
+
+ </div>
+</section>
+<!-- /.content -->
+<div class="modal" id = "modalCountry" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Choose your country</h4>
+      </div>
+      <div class="modal-body">
+<div class="list-group" id="countryCode">
+  <a class="list-group-item list-group-item-action">US</a>
+  <a class="list-group-item list-group-item-action">GB</a>
+<a class="list-group-item list-group-item-action">CA</a>
+</div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+

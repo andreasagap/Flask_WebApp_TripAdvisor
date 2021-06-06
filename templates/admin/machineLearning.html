@@ -1,6 +1,11 @@
 {% extends 'admin/master.html' %}
  {% block head %}
-    <link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet">
+<link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script src="{{url_for('static',filename='js/pages/dashboard3.js')}}"></script>
 
   {% endblock head%}
 {% block body %}
@@ -8,11 +13,6 @@
 
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    Machine Learning
-  </h1>
-</section>
 
 <section class="content">
   <!-- Small boxes (Stat box) -->
@@ -29,28 +29,44 @@
       <div class="box box-solid bg-light-blue-gradient">
         <div class="box-header">
           <!-- tools box -->
-          <div class="pull-right box-tools">
-
-            <button type="button" class="btn btn-primary btn-sm daterange pull-right" title="Date range">
-              <i class="fa fa-calendar"></i></button>
-          </div>
           <!-- /. tools -->
 
-          <i class="fa fa-cloud"></i>
 
           <h3 class="box-title">
-            Wordclouds
+            Gender Prediction
           </h3>
         </div>
 
-        <div id = "wordclouds" class="box-body" >
-          <h3 style="color: white">Positive wordcloud</h3>
-          <div id="positive_wordcloud" style="background-color: white"></div>
-          <h3 style="color: white">Negative wordcloud</h3>
-          <div id="negative_wordcloud" style="background-color: white"></div>
+        <div class="box-body" >
+          <img class="center" width="450" height="350" src="static/img/genderPredictionCM.png">
 
-<!--            <img id="wordcloud" src="/static/img/wordcloud.png" alt="">-->
+          <p align="justify" >
+            In order to enrich the demographic information about user profiles, a gender prediction module was implemented.Out of 5549 user profiles collected, only 875 of them contained a gender feature. What’s more, reviews from 2263 users were collected and incorporated for the gender pre-diction task. The gender prediction module starts with the data preprocessing, in which the reviews of each user are aggregated. Next, text reviews are transformed into lower-case representation and are stemmed while stopwords and digits are removed. The text is then transformed into vector representation using CountVectorizer method. Out of the 875 known user profiles, 600 are used for the training phase,while 275 are used for testing. We utilized a Random ForestClassifier for the binary classification and the evaluation metrics are accuracy score and F1-score. The classifier achieved 0.67 accuracy and 0.57 F1-score.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="col-lg-5 ">
+      <!-- Custom tabs (Charts with tabs)-->
 
+      <!-- /.nav-tabs-custom -->
+ <!-- WordClouds box -->
+      <div class="box box-solid bg-light-blue-gradient">
+        <div class="box-header">
+          <!-- tools box -->
+          <!-- /. tools -->
+
+
+          <h3 class="box-title">
+            Age Prediction
+          </h3>
+        </div>
+
+        <div class="box-body" >
+          <img class="center" width="450" height="350" src="static/img/genderPredictionCM.png">
+
+          <p align="justify" >
+          </p>
         </div>
       </div>
     </section>
@@ -60,32 +76,62 @@
     <!-- right col -->
   </div>
   <!-- /.row (main row) -->
+ <div class="row">
+   <section >
+      <!-- Custom tabs (Charts with tabs)-->
 
+      <!-- /.nav-tabs-custom -->
+ <!-- WordClouds box -->
+      <div class="box box-solid bg-light-blue-gradient">
+        <div class="box-header">
+          <!-- tools box -->
+          <!-- /. tools -->
+    <div class="pull-right box-tools">
+
+            <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#modalUser" title="">
+              <i class="fa fa-info"></i></button>
+          </div>
+
+          <h3 class="box-title">
+            User Clustering
+          </h3>
+        </div>
+
+        <div class="box-body" >
+          <img class="center" width="450" height="350" src="static/img/genderPredictionCM.png">
+
+          <p align="justify" >
+            In order to enrich the demographic information about user profiles, a gender prediction module was implemented.Out of 5549 user profiles collected, only 875 of them contained a gender feature. What’s more, reviews from 2263 users were collected and incorporated for the gender pre-diction task. The gender prediction module starts with the data preprocessing, in which the reviews of each user are aggregated. Next, text reviews are transformed into lower-case representation and are stemmed while stopwords and digits are removed. The text is then transformed into vector representation using CountVectorizer method. Out of the 875 known user profiles, 600 are used for the training phase,while 275 are used for testing. We utilized a Random ForestClassifier for the binary classification and the evaluation metrics are accuracy score and F1-score. The classifier achieved 0.67 accuracy and 0.57 F1-score.
+          </p>
+        </div>
+      </div>
+    </section>
+ </div>
 </section>
 <!-- /.content -->
-<div class="modal" id = "modalLDA" tabindex="-1" role="dialog">
+<div class="modal" id = "modalUser" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Choose season</h4>
+        <h4 class="modal-title">Info</h4>
       </div>
       <div class="modal-body">
-<div class="list-group">
-  <a href="lda/Winter" target="_blank" class="list-group-item list-group-item-action">
-    Winter
-  </a>
-  <a href="lda/Autumn" target="_blank" class="list-group-item list-group-item-action">Autumn</a>
-  <a href="lda/Spring" target="_blank" class="list-group-item list-group-item-action">Spring</a>
-  <a href="lda/Summer" target="_blank" class="list-group-item list-group-item-action">Summer</a>
-  <a href="lda/Overall" target="_blank" class="list-group-item list-group-item-action">Overall</a>
-</div>
-
-      </div>
-      <div class="modal-footer">
+        <p>To group users in communities according to opinions they express during their interaction with  TripAdvisor platform we applied the following procedure. By using the last 50 reviews for 2.500 users, we utilized Natural Language Processing techniques to group them according to the content of their reviews. Firstly, text of each user reviews is organized in a single integrated corpus. Then some preprocessing techniques are applied on this corpus for text cleaning purposes: </p>
+      <ol>
+<!-- Start of ordered list. Paragraphs cannot contain lists. Insert </p> -->
+<li>tokenization</li>
+      <li>remove punctuation</li>
+      <li>remove English stop-words</li>
+      <li>convert tokens to lowercase</li>
+      <li>remove suffixes with stemming</li></ol>
+<p>Next, by utilizing the TFIDF approach we converted the unified corpus to a vector format. Consequently, PCA method is applied to reduce the dimensionality of our Dataset.</p>
+        <p>Finally, utilizing vector representation of each user, we applied the k-Means algorithm to group users into clusters. Because we can not know in advance the ideal size for k we executed the algorithm repeatedly and evaluated its performance based on the metrics of silhouette score and sum squared error.</p>
+        <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+    </div>
 </div>
 
 {% endblock body %}

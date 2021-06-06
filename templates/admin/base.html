@@ -101,9 +101,10 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
          <li><a href="/">Home</a></li>
-        <li><a href="world">World</a></li>
-         <li><a href="machine-learning">Machine Learning</a></li>
-
+        <li><a href="task1">Task 1</a></li>
+         <li><a href="task2">Task 2</a></li>
+ <li><a href="task3">Task 3</a></li>
+         <li><a href="task4">Task 4</a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -323,12 +324,7 @@
 <script src="{{url_for('static',filename='js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{url_for('static',filename='js/demo.js')}}"></script>
-{% if admin_view.name=="Home" %}
-  <script src="{{url_for('static',filename='js/pages/dashboard.js')}}"></script>
-{% endif %}
-{% if admin_view.name=="World" %}
-  <script src="{{url_for('static',filename='js/pages/dashboard2.js')}}"></script>
-{% endif %}
+
 {% endblock tail_js%}
 
 {% block tail %}

@@ -1,7 +1,6 @@
 {% extends 'admin/master.html' %}
  {% block head %}
-    <link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet">
-  <script src="{{url_for('static',filename='js/pages/dashboard.js')}}"></script>
+<link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
 
   {% endblock head%}
 {% block body %}
@@ -9,235 +8,20 @@
 
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    Dashboard
-  </h1>
-</section>
 
 <section class="content">
-  <!-- Small boxes (Stat box) -->
-  <div class="row">
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-aqua">
-        <div class="inner">
-          <h3>{{ratings_acropolis}}</h3>
-          <p>Ratings of Acropolis</p>
-        </div>
-        <div class="icon">
-          <i class="fa fa-university"></i>
-        </div>
-<!--        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-green">
-        <div class="inner">
-          <h3>{{man}}</h3>
 
-          <p>Verified number of men</p>
-        </div>
-        <div class="icon">
-          <i class="fa fa-male"></i>
-        </div>
-<!--        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-yellow">
-        <div class="inner">
-          <h3>{{woman}}</h3>
 
-          <p>Verified number of women</p>
-        </div>
-        <div class="icon">
-          <i class="fa fa-female"></i>
-        </div>
-<!--        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-red" >
-        <div class="inner">
-          <h3>{{len_ages}}</h3>
+      <div class="backgroundDiv" style="background-image: url('static/img/image_home.jpg');">
+        <p>
+          test
+        </p>
 
-          <p>Verified group of ages</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-pie-graph"></i>
-        </div>
-<!--        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-      </div>
-    </div>
-    <!-- ./col -->
   </div>
-  <!-- /.row -->
-  <!-- Main row -->
-  <div class="row">
-    <!-- Left col -->
-    <section class="col-lg-5 ">
-      <!-- Custom tabs (Charts with tabs)-->
-      <div class="nav-tabs-custom">
-        <!-- Tabs within a box -->
-        <ul class="nav nav-tabs pull-right">
-          <div class="small-box bg-teal topics-div">
-            <div class="inner">
-              <h3>7</h3>
-              <p>Topics</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-commenting"></i>
-            </div>
-          <a target="_blank" class="small-box-footer" data-toggle="modal" data-target="#modalLDA">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </ul>
-
-      </div>
-      <!-- /.nav-tabs-custom -->
- <!-- WordClouds box -->
-      <div class="box box-solid bg-light-blue-gradient">
-        <div class="box-header">
-          <!-- tools box -->
-          <div class="pull-right box-tools">
-
-            <button type="button" class="btn btn-primary btn-sm daterange pull-right" title="Date range">
-              <i class="fa fa-calendar"></i></button>
-          </div>
-          <!-- /. tools -->
-
-          <i class="fa fa-cloud"></i>
-
-          <h3 class="box-title">
-            Wordclouds
-          </h3>
-          <p  align="justify">
-            As Acropolis is the main core of our analysis, 20.000 user reviews were collected for the Acropolis location. According to the rating each review is classified as positive or negative. More specifically, ratings range from 1 to 5, so positive reviews include reviews with rating 4 and 5. On the other hand, negative reviews include reviews with score 1 and 2.In order to construct more meaningful wordclouds we excluded reviews with rating score 3 as they include neutral reviews. What’s more text reviews were preprocessed re-moving stopwords, punctuation and were transformed intovector representation using CountVectorizer. It is worth mentioning that the words Acropolis and Athens were added to the stopwords list, as they do not provide useful insight regarding user sentiment.
-          </p>
-        </div>
-        <div id = "wordclouds" class="box-body" >
-          <h3 style="color: white">Positive wordcloud</h3>
-          <div id="positive_wordcloud" style="background-color: white"></div>
-          <h3 style="color: white">Negative wordcloud</h3>
-          <div id="negative_wordcloud" style="background-color: white"></div>
-
-<!--            <img id="wordcloud" src="/static/img/wordcloud.png" alt="">-->
-
-        </div>
-      </div>
-    </section>
-    <!-- /.Left col -->
-    <!-- right col (We are only adding the ID to make the widgets sortable)-->
-    <section class="col-lg-7">
-
-      <!-- Map box -->
-      <div class="box box-solid bg-light-blue-gradient">
-        <div class="box-header">
-
-          <!-- /. tools -->
-
-          <i class="fa fa-map-marker"></i>
-
-          <h3 class="box-title">
-            Visitors
-          </h3>
-        </div>
-        <div class="box-body">
-          <div id="world-map" style="height: 250px; width: 100%;"></div>
-        </div>
 
 
-      </div>
-      <!-- /.box -->
-
-      <!-- solid sales graph -->
-      <div class="box box-solid bg-teal-gradient">
-        <div class="box-header">
-          <i class="fa fa-th"></i>
-
-          <h3 class="box-title">Sales Graph</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <div class="box-body border-radius-none">
-          <div class="chart" id="line-chart" style="height: 250px;"></div>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer no-border">
-          <div class="row">
-            <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-              <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-              <div class="knob-label">Mail-Orders</div>
-            </div>
-            <!-- ./col -->
-            <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-              <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-              <div class="knob-label">Online</div>
-            </div>
-            <!-- ./col -->
-            <div class="col-xs-4 text-center">
-              <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-              <div class="knob-label">In-Store</div>
-            </div>
-            <!-- ./col -->
-          </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.box-footer -->
-      </div>
-      <!-- /.box -->
-
-
-    </section>
-    <!-- right col -->
-  </div>
-  <!-- /.row (main row) -->
 
 </section>
-<!-- /.content -->
-<div class="modal" id = "modalLDA" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Choose season</h4>
-      </div>
-      <div class="modal-body">
-<div class="list-group">
-  <a href="lda/Winter" target="_blank" class="list-group-item list-group-item-action">
-    Winter
-  </a>
-  <a href="lda/Autumn" target="_blank" class="list-group-item list-group-item-action">Autumn</a>
-  <a href="lda/Spring" target="_blank" class="list-group-item list-group-item-action">Spring</a>
-  <a href="lda/Summer" target="_blank" class="list-group-item list-group-item-action">Summer</a>
-    <a href="lda/Covid" target="_blank" class="list-group-item list-group-item-action">Covid period</a>
-  <a href="lda/2011_2013" target="_blank" class="list-group-item list-group-item-action">2011-2013</a>
 
-  <a href="lda/2013_2015" target="_blank" class="list-group-item list-group-item-action">2013-2015</a>
-    <a href="lda/2015_2017" target="_blank" class="list-group-item list-group-item-action">2015-2017</a>
-    <a href="lda/2017_2019" target="_blank" class="list-group-item list-group-item-action">2017-2019</a>
-  <a href="lda/Overall" target="_blank" class="list-group-item list-group-item-action">Overall</a>
-</div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 {% endblock body %}

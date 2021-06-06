@@ -75,12 +75,26 @@ class MyHomeView(AdminIndexView):
                            len_ages = len_ages,
                            ages=ages)
 
-    @expose('/machine-learning')
-    def machine(self):
-            return self.render('admin/machineLearning.html')
-    @expose('/world')
-    def world(self):
-            return self.render('admin/custom_index.html')
+    @expose('/task2')
+    def task2(self):
+            return self.render('admin/task2.html')
+    @expose('/task1')
+    def task1(self):
+        ratings_acropolis, man, woman, ages = acropolis.getAcropolisStatistics()
+        len_ages = len(ages)
+        jsonfiles = json.loads(ages.to_json(orient='index'))
+        print(jsonfiles)
+        return self.render('admin/task1.html', ratings_acropolis=ratings_acropolis,
+                           man=man,
+                           woman=woman,
+                           len_ages=len_ages,
+                           ages=ages)
+    @expose('/task3')
+    def task3(self):
+            return self.render('admin/task3.html')
+    @expose('/task4')
+    def task4(self):
+            return self.render('admin/task4.html')
 # Create admin
 
 admin = flask_admin.Admin(

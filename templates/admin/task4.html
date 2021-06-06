@@ -1,0 +1,181 @@
+{% extends 'admin/master.html' %}
+ {% block head %}
+<link href="{{url_for('static',filename='css/index.css')}}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script src="{{url_for('static',filename='js/pages/dashboard3.js')}}"></script>
+
+  {% endblock head%}
+{% block body %}
+
+
+
+<!-- Content Header (Page header) -->
+
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+
+  <!-- /.row -->
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+    <section class="col-lg-5 ">
+      <!-- Custom tabs (Charts with tabs)-->
+
+      <!-- /.nav-tabs-custom -->
+ <!-- WordClouds box -->
+      <div class="box box-solid bg-light-blue-gradient">
+        <div class="box-header">
+          <!-- tools box -->
+          <!-- /. tools -->
+
+
+          <h3 class="box-title">
+            Gender Prediction
+          </h3>
+        </div>
+
+        <div class="box-body" >
+          <img class="center" width="450" height="350" src="static/img/genderPredictionCM.png">
+
+          <p align="justify" >
+            In order to enrich the demographic information about user profiles, a gender prediction module was implemented.Out of 5549 user profiles collected, only 875 of them contained a gender feature. What’s more, reviews from 2263 users were collected and incorporated for the gender pre-diction task. The gender prediction module starts with the data preprocessing, in which the reviews of each user are aggregated. Next, text reviews are transformed into lower-case representation and are stemmed while stopwords and digits are removed. The text is then transformed into vector representation using CountVectorizer method. Out of the 875 known user profiles, 600 are used for the training phase,while 275 are used for testing. We utilized a Random ForestClassifier for the binary classification and the evaluation metrics are accuracy score and F1-score. The classifier achieved 0.67 accuracy and 0.57 F1-score.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="col-lg-5 ">
+      <!-- Custom tabs (Charts with tabs)-->
+
+      <!-- /.nav-tabs-custom -->
+ <!-- WordClouds box -->
+      <div class="box box-solid bg-light-blue-gradient">
+        <div class="box-header">
+          <!-- tools box -->
+          <!-- /. tools -->
+
+
+          <h3 class="box-title">
+            Age Prediction
+          </h3>
+        </div>
+
+        <div class="box-body" >
+          <img class="center" width="450" height="350" src="static/img/genderPredictionCM.png">
+
+          <p align="justify" >
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+    <!-- right col -->
+  </div>
+  <!-- /.row (main row) -->
+ <div class="row">
+   <section >
+      <!-- Custom tabs (Charts with tabs)-->
+
+      <!-- /.nav-tabs-custom -->
+ <!-- WordClouds box -->
+      <div class="box box-solid bg-light-blue-gradient">
+        <div class="box-header">
+          <!-- tools box -->
+          <!-- /. tools -->
+    <div class="pull-right box-tools">
+
+            <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#modalUser" title="">
+              <i class="fa fa-info"></i></button>
+          </div>
+
+          <h3 class="box-title">
+            User Clustering
+          </h3>
+        </div>
+
+        <div class="box-body" >
+            <p align="justify">
+                To group users in communities according to opinions they express during their interaction with
+                TripAdvisor platform we applied the following procedure. By using the last 50 reviews for
+                2.500 users, we utilized Natural Language Processing techniques to group them according to the
+                content of their reviews. Firstly, text of each user reviews is organized in a single integrated corpus.
+                Then some pre-processing techniques were applied on this corpus for text cleaning purposes:
+            </p>
+            <ul>
+                <li>tokenization</li>
+                <li>remove punctuation</li>
+                <li>remove English stop-words</li>
+                <li>convert tokens to lowercase</li>
+                <li>remove suffixes with stemming</li>
+            </ul>
+            <p align="justify">
+                Next, by utilizing the TFIDF approach we converted the unified corpus to a vector format. Consequently,
+                PCA method is applied to reduce the dimensionality of our Dataset.
+                Finally, utilizing vector representation of each user, we applied the k-Means
+                algorithm to group users into clusters. Because we couldn't know in advance
+                the ideal size for kwe executed the algorithm repeatedly and evaluated its
+                performance based on the metrics of silhouette score and sum squared error.
+                In the following pictures we can see the validation of consistency within the clusters
+                depending on thechoice of k.
+            </p>
+
+            <div class="rowImage">
+              <div class="columnImage">
+                <img src="static/img/silhouette.png" style="width:100%">
+              </div>
+              <div class="columnImage">
+                <img src="static/img/sse.png" style="width:100%">
+              </div>
+            </div>
+
+            <p align="justify" >
+                 An illustration of the clusters is also given in the following picture. Clusters are projected in 2 dimensional space by using the 2 principal components resulting from the PCA.
+            </p>
+
+          <img class="centerClusters" width="80%" height="350" src="static/img/3means.png">
+
+            <p>
+                Additionally, it’s important to know what makes each cluster unique. This will help us understand which
+                types of tourists we have in our Dataset. The approach would be to pick a subset of variables that are
+                important in defining clusters to some extent. There are two methods, namely variance between averaged
+                groups and extracting feature importance through predictive modeling.
+
+            </p>
+
+            <div class="rowImage">
+              <div class="columnImage">
+                <img src="static/img/interpretation1.png" style="width:100%">
+              </div>
+              <div class="columnImage">
+                <img src="static/img/interpretation2.png" style="width:100%">
+              </div>
+            </div>
+
+
+
+        </div>
+      </div>
+    </section>
+ </div>
+</section>
+<!-- /.content -->
+<div class="modal" id = "modalUser" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Info</h4>
+      </div>
+      <div class="modal-body">
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+    </div>
+</div>
+
+{% endblock body %}

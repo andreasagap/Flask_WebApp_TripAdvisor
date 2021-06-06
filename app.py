@@ -95,7 +95,7 @@ class MyHomeView(AdminIndexView):
             return self.render('admin/task4.html')
 
     @expose('/task5')
-    def task2(self):
+    def task5(self):
         return self.render('admin/task5.html')
 # Create admin
 

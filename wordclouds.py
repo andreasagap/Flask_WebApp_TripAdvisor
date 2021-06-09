@@ -14,7 +14,7 @@ from sklearn.linear_model import LogisticRegression
 import datetime
 import io
 import urllib, base64
-
+nltk.download('stopwords')
 
 def load_dataset(start,end):
     reviews = pd.read_csv('Analytics/acropolis_reviews.csv',parse_dates=True)

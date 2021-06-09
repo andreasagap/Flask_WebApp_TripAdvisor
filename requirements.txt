@@ -44,6 +44,7 @@ pycparser==2.20
 pyparsing==2.3.0
 pyquery==1.4.3
 PySocks==1.7.1
+wordcloud
 python-dateutil==2.7.5
 python-louvain==0.14
 pytz==2018.7

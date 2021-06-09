@@ -63,6 +63,6 @@ tqdm==4.55.0
 tweepy
 twint
 typing-extensions==3.7.4.3
-urllib3==1.26.2
+urllib3==1.26.5
 wordsegment==1.3.1
 yarl==1.6.3
